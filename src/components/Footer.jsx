@@ -98,7 +98,7 @@ export default function Footer() {
           <p>
             © {new Date().getFullYear()} {site.name}. All rights reserved.
           </p>
-          <p>Made with care in Leh, Ladakh 🏔️</p>
+          <p>Made with ssdesign 🏔️</p>
         </div>
       </div>
     </footer>
