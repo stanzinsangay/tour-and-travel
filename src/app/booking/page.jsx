@@ -1,6 +1,7 @@
 import { tours } from "@/data/tours";
 import { site } from "@/data/site";
 import BookingForm from "@/components/BookingForm";
+import PaymentDetails from "@/components/PaymentDetails";
 
 export const metadata = {
   title: "Book Your Ladakh Tour",
@@ -51,6 +52,8 @@ export default function BookingPage() {
 
           {/* Sidebar */}
           <aside className="space-y-6">
+            <PaymentDetails />
+
             <div className="rounded-2xl bg-stone-50 p-6 ring-1 ring-stone-200">
               <h3 className="font-display text-lg font-bold text-stone-900">
                 How it works

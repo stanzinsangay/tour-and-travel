@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { tours, getTour, formatINR } from "@/data/tours";
 import { site } from "@/data/site";
 import BookingForm from "@/components/BookingForm";
+import PaymentDetails from "@/components/PaymentDetails";
 
 // Pre-render a static page for every tour at build time.
 export function generateStaticParams() {
@@ -231,8 +232,13 @@ export default async function TourDetail({ params }) {
             Fill in the form and our team will confirm availability and a quote
             within 24 hours.
           </p>
-          <div className="mt-8 rounded-2xl bg-white p-6 md:p-8 ring-1 ring-stone-200 shadow-sm">
-            <BookingForm tourTitles={tourTitles} defaultTour={tour.title} />
+          <div className="mt-8 grid gap-6 lg:grid-cols-5">
+            <div className="lg:col-span-3 rounded-2xl bg-white p-6 md:p-8 ring-1 ring-stone-200 shadow-sm">
+              <BookingForm tourTitles={tourTitles} defaultTour={tour.title} />
+            </div>
+            <div className="lg:col-span-2">
+              <PaymentDetails amount={tour.price} />
+            </div>
           </div>
         </div>
       </section>

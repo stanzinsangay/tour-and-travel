@@ -18,6 +18,22 @@ export const site = {
   // Office hours
   hours: "Mon – Sun: 9:00 AM – 8:00 PM (IST)",
 
+  // --- Payment details (direct UPI / bank transfer) ---
+  // Fill these with your REAL details. They show on the booking page so a
+  // customer can pay the advance directly, then send a screenshot on WhatsApp.
+  payment: {
+    advancePercent: 25, // % advance needed to confirm a booking
+    upiId: "7006120301@ybl", // PhonePe UPI ID
+    upiName: "OTSAL Tour & Travel", // name shown to payer on UPI
+    // Bank details — left blank for now, will be filled in later.
+    accountName: "",
+    bankName: "",
+    accountNumber: "",
+    ifsc: "",
+    // UPI QR image in /public.
+    qr: "/qrcode.jpeg",
+  },
+
   // --- Social links (replace # with your real profiles) ---
   social: {
     instagram: "#",
