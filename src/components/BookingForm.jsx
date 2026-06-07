@@ -1,7 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { buildWhatsAppLink, buildMailtoLink } from "@/lib/booking";
+import { buildMailtoLink } from "@/lib/booking";
+import PaymentDetails from "@/components/PaymentDetails";
 
 const empty = {
   name: "",
@@ -13,9 +14,13 @@ const empty = {
   message: "",
 };
 
-export default function BookingForm({ tourTitles = [], defaultTour = "" }) {
+export default function BookingForm({
+  tourTitles = [],
+  defaultTour = "",
+  priceByTitle = {},
+}) {
   const [data, setData] = useState({ ...empty, tour: defaultTour });
-  const [status, setStatus] = useState("idle"); // idle | success | error
+  const [step, setStep] = useState("form"); // form | pay
   const [error, setError] = useState("");
 
   function update(field, value) {
@@ -27,53 +32,47 @@ export default function BookingForm({ tourTitles = [], defaultTour = "" }) {
     setError("");
 
     if (!data.name || !data.phone) {
-      setStatus("error");
       setError("Please share at least your name and phone number.");
       return;
     }
 
-    // Send the enquiry straight to our WhatsApp with all details pre-filled.
-    window.open(buildWhatsAppLink(data), "_blank", "noopener,noreferrer");
-    setStatus("success");
+    // Move on to the payment step.
+    setStep("pay");
   }
 
-  if (status === "success") {
+  // ---------- STEP 2: PAYMENT ----------
+  if (step === "pay") {
+    const amount = priceByTitle[data.tour]; // undefined for custom / not-sure
     return (
-      <div className="rounded-2xl bg-green-50 ring-1 ring-green-200 p-8 text-center">
-        <div className="mx-auto mb-3 grid h-12 w-12 place-items-center rounded-full bg-green-600 text-white text-2xl">
-          ✓
-        </div>
-        <h3 className="font-display text-xl font-bold text-green-900">
-          Almost done — just tap send!
-        </h3>
-        <p className="mt-2 text-sm text-green-800">
-          We&apos;ve opened WhatsApp with your enquiry details filled in. Tap
-          <strong> send</strong> in WhatsApp and our Ladakh team will reply
-          shortly. If WhatsApp didn&apos;t open, use the button below.
-        </p>
-        <div className="mt-5 flex flex-wrap justify-center gap-3">
-          <a
-            href={buildWhatsAppLink(data)}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="rounded-lg bg-[#25D366] px-5 py-2.5 text-sm font-semibold text-white"
-          >
-            Continue on WhatsApp
-          </a>
+      <div className="space-y-5">
+        <div className="flex items-start justify-between gap-3">
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-wide text-brand-600">
+              Step 2 of 2
+            </p>
+            <h3 className="font-display text-xl font-bold text-stone-900">
+              Pay advance to confirm
+            </h3>
+            <p className="mt-1 text-sm text-stone-500">
+              Thanks {data.name.split(" ")[0]} — pay the advance below, then send
+              your details &amp; screenshot to us on WhatsApp.
+            </p>
+          </div>
           <button
-            onClick={() => {
-              setData({ ...empty, tour: defaultTour });
-              setStatus("idle");
-            }}
-            className="rounded-lg bg-white px-5 py-2.5 text-sm font-semibold text-stone-700 ring-1 ring-stone-300"
+            type="button"
+            onClick={() => setStep("form")}
+            className="shrink-0 rounded-lg px-3 py-1.5 text-sm font-semibold text-brand-700 hover:bg-brand-50 transition"
           >
-            Send another
+            ← Edit details
           </button>
         </div>
+
+        <PaymentDetails amount={amount} enquiry={data} />
       </div>
     );
   }
 
+  // ---------- STEP 1: DETAILS FORM ----------
   const inputClass =
     "w-full rounded-lg border border-stone-300 bg-white px-3.5 py-2.5 text-sm text-stone-800 outline-none transition focus:border-brand-500 focus:ring-2 focus:ring-brand-200";
 
@@ -156,7 +155,7 @@ export default function BookingForm({ tourTitles = [], defaultTour = "" }) {
         />
       </Field>
 
-      {status === "error" && (
+      {error && (
         <p className="rounded-lg bg-red-50 px-4 py-3 text-sm text-red-700 ring-1 ring-red-200">
           {error}
         </p>
@@ -165,9 +164,9 @@ export default function BookingForm({ tourTitles = [], defaultTour = "" }) {
       <div className="pt-1">
         <button
           type="submit"
-          className="flex w-full items-center justify-center gap-2 rounded-lg bg-[#25D366] px-6 py-3 text-sm font-semibold text-white shadow-md hover:brightness-95 transition"
+          className="w-full rounded-lg bg-brand-700 px-6 py-3 text-sm font-semibold text-white shadow-md hover:bg-brand-800 transition"
         >
-          Send Enquiry on WhatsApp
+          Continue to payment →
         </button>
       </div>
 

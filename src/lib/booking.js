@@ -1,7 +1,9 @@
 import { site } from "@/data/site";
 
 // Build a prefilled WhatsApp deep link from a booking/enquiry object.
-export function buildWhatsAppLink(data) {
+// Pass opts.paid (with optional opts.advanceAmount) to append a line saying
+// the advance has been paid and a screenshot is attached.
+export function buildWhatsAppLink(data, opts = {}) {
   const lines = [
     `*New Booking Enquiry — ${site.name}*`,
     "",
@@ -13,6 +15,13 @@ export function buildWhatsAppLink(data) {
     data.travellers ? `Travellers: ${data.travellers}` : null,
     data.message ? `Message: ${data.message}` : null,
   ].filter(Boolean);
+
+  if (opts.paid) {
+    const amt = opts.advanceAmount
+      ? ` (₹${Number(opts.advanceAmount).toLocaleString("en-IN")})`
+      : "";
+    lines.push("", `✅ I've paid the advance${amt} — payment screenshot attached.`);
+  }
 
   const text = encodeURIComponent(lines.join("\n"));
   return `https://wa.me/${site.whatsapp}?text=${text}`;

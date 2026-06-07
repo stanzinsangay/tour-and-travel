@@ -3,11 +3,14 @@
 import { useState } from "react";
 import { site } from "@/data/site";
 import { formatINR } from "@/data/tours";
+import { buildWhatsAppLink } from "@/lib/booking";
 
 // Shows direct UPI / bank-transfer payment details so a customer can pay the
 // advance themselves, then confirm by sending a screenshot on WhatsApp.
-// Pass `amount` (the full tour price) to display the exact advance figure.
-export default function PaymentDetails({ amount }) {
+// Pass `amount` (the full tour price) to display the exact advance figure, and
+// `enquiry` (the booking form data) so the WhatsApp message includes the
+// customer's details along with the paid-advance note.
+export default function PaymentDetails({ amount, enquiry }) {
   const p = site.payment;
   const [copied, setCopied] = useState("");
 
@@ -21,9 +24,15 @@ export default function PaymentDetails({ amount }) {
 
   const advance = amount ? Math.round((amount * p.advancePercent) / 100) : null;
 
-  const waHref = `https://wa.me/${site.whatsapp}?text=${encodeURIComponent(
-    `Hi ${site.name}, I've paid the advance for my Ladakh tour. Here is my payment screenshot.`
-  )}`;
+  const waHref = enquiry
+    ? buildWhatsAppLink(enquiry, { paid: true, advanceAmount: advance })
+    : `https://wa.me/${site.whatsapp}?text=${encodeURIComponent(
+        `Hi ${site.name}, I've paid the advance for my Ladakh tour. Here is my payment screenshot.`
+      )}`;
+
+  const buttonLabel = enquiry
+    ? "Send details + screenshot on WhatsApp"
+    : "I've paid — send screenshot on WhatsApp";
 
   const rows = [
     ["Account name", p.accountName],
@@ -107,9 +116,10 @@ export default function PaymentDetails({ amount }) {
         rel="noopener noreferrer"
         className="mt-5 block rounded-lg bg-[#25D366] px-5 py-3 text-center text-sm font-semibold text-white shadow-md hover:brightness-95 transition"
       >
-        I&apos;ve paid — send screenshot on WhatsApp
+        {buttonLabel}
       </a>
       <p className="mt-2 text-center text-xs text-stone-400">
+        Opens WhatsApp with your details — just attach the screenshot and send.
         Your booking is confirmed once we receive the advance.
       </p>
     </div>
