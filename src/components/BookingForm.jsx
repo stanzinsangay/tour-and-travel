@@ -15,16 +15,15 @@ const empty = {
 
 export default function BookingForm({ tourTitles = [], defaultTour = "" }) {
   const [data, setData] = useState({ ...empty, tour: defaultTour });
-  const [status, setStatus] = useState("idle"); // idle | sending | success | error
+  const [status, setStatus] = useState("idle"); // idle | success | error
   const [error, setError] = useState("");
 
   function update(field, value) {
     setData((d) => ({ ...d, [field]: value }));
   }
 
-  async function handleSubmit(e) {
+  function handleSubmit(e) {
     e.preventDefault();
-    setStatus("sending");
     setError("");
 
     if (!data.name || !data.phone) {
@@ -33,19 +32,9 @@ export default function BookingForm({ tourTitles = [], defaultTour = "" }) {
       return;
     }
 
-    try {
-      const res = await fetch("/api/booking", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
-      });
-      const json = await res.json();
-      if (!res.ok) throw new Error(json.error || "Something went wrong.");
-      setStatus("success");
-    } catch (err) {
-      setStatus("error");
-      setError(err.message || "Could not send your request. Please try WhatsApp.");
-    }
+    // Send the enquiry straight to our WhatsApp with all details pre-filled.
+    window.open(buildWhatsAppLink(data), "_blank", "noopener,noreferrer");
+    setStatus("success");
   }
 
   if (status === "success") {
@@ -55,11 +44,12 @@ export default function BookingForm({ tourTitles = [], defaultTour = "" }) {
           ✓
         </div>
         <h3 className="font-display text-xl font-bold text-green-900">
-          Enquiry received — thank you!
+          Almost done — just tap send!
         </h3>
         <p className="mt-2 text-sm text-green-800">
-          Our Ladakh team will get back to you within 24 hours. For a faster
-          reply, message us directly on WhatsApp.
+          We&apos;ve opened WhatsApp with your enquiry details filled in. Tap
+          <strong> send</strong> in WhatsApp and our Ladakh team will reply
+          shortly. If WhatsApp didn&apos;t open, use the button below.
         </p>
         <div className="mt-5 flex flex-wrap justify-center gap-3">
           <a
@@ -172,22 +162,13 @@ export default function BookingForm({ tourTitles = [], defaultTour = "" }) {
         </p>
       )}
 
-      <div className="flex flex-col sm:flex-row gap-3 pt-1">
+      <div className="pt-1">
         <button
           type="submit"
-          disabled={status === "sending"}
-          className="flex-1 rounded-lg bg-brand-700 px-6 py-3 text-sm font-semibold text-white shadow-md hover:bg-brand-800 disabled:opacity-60 transition"
+          className="flex w-full items-center justify-center gap-2 rounded-lg bg-[#25D366] px-6 py-3 text-sm font-semibold text-white shadow-md hover:brightness-95 transition"
         >
-          {status === "sending" ? "Sending…" : "Send Booking Enquiry"}
+          Send Enquiry on WhatsApp
         </button>
-        <a
-          href={buildWhatsAppLink(data)}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="flex-1 text-center rounded-lg bg-[#25D366] px-6 py-3 text-sm font-semibold text-white shadow-md hover:brightness-95 transition"
-        >
-          Book on WhatsApp
-        </a>
       </div>
 
       <p className="text-center text-xs text-stone-400">
