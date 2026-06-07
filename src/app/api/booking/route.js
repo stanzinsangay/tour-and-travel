@@ -2,16 +2,14 @@ import { NextResponse } from "next/server";
 
 // Booking enquiry endpoint.
 //
-// Out of the box this validates the submission, logs it on the server and
-// returns success — so the website works with zero configuration.
-//
-// To actually receive bookings by EMAIL, install nodemailer
-// (`npm install nodemailer`) and set these environment variables in
-// `.env.local` (see `.env.example`):
+// Validates the submission, logs it on the server, and emails it to you.
+// Email delivery is active and uses nodemailer — it needs these environment
+// variables in `.env.local` (see `.env.example`):
 //
 //   SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASS, BOOKING_TO
 //
-// then uncomment the nodemailer block below.
+// If those vars are not set, the enquiry is still logged on the server and
+// the customer can fall back to the WhatsApp / email buttons on the form.
 
 export async function POST(request) {
   let data;
@@ -40,9 +38,8 @@ export async function POST(request) {
     message: data.message,
   });
 
-  // --- Optional: send an email via nodemailer ---------------------------
-  // Uncomment after `npm install nodemailer` and setting SMTP_* env vars.
-  /*
+  // --- Send the enquiry to you by email via nodemailer ------------------
+  // Requires SMTP_* env vars in .env.local (see .env.example).
   try {
     if (process.env.SMTP_HOST) {
       const nodemailer = (await import("nodemailer")).default;
@@ -63,13 +60,17 @@ export async function POST(request) {
           `Tour: ${data.tour}\nTravel date: ${data.travelDate}\n` +
           `Travellers: ${data.travellers}\n\nMessage:\n${data.message}`,
       });
+      console.log("✅ Enquiry emailed to", process.env.BOOKING_TO || process.env.SMTP_USER);
+    } else {
+      console.warn(
+        "⚠️  SMTP not configured — enquiry was logged but NOT emailed. Set SMTP_* in .env.local."
+      );
     }
   } catch (err) {
     console.error("Email send failed:", err);
     // We don't fail the request — the enquiry is still logged and the user
     // can fall back to WhatsApp.
   }
-  */
 
   return NextResponse.json({ ok: true });
 }
