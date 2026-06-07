@@ -1,0 +1,42 @@
+// Central place for all business / contact details.
+// Edit these once and they update across the whole website.
+
+export const site = {
+  name: "OTSAL Tour & Travel",
+  shortName: "OTSAL",
+  tagline: "Discover the Soul of Ladakh",
+  description:
+    "OTSAL Tour & Travel is a Ladakh-based travel company crafting unforgettable journeys across Leh, Nubra, Pangong, Tso Moriri and the high Himalaya. Tailor-made tours, bike expeditions, treks and family holidays — run by locals who call these mountains home.",
+
+  // --- Contact details (edit these to your real numbers) ---
+  phone: "+91 98765 43210",
+  // WhatsApp number in international format, digits only (no +, spaces or dashes)
+  whatsapp: "919876543210",
+  email: "bookings@otsaltours.com",
+  address: "Main Bazaar Road, Leh, Ladakh 194101, India",
+
+  // Office hours
+  hours: "Mon – Sun: 9:00 AM – 8:00 PM (IST)",
+
+  // --- Social links (replace # with your real profiles) ---
+  social: {
+    instagram: "#",
+    facebook: "#",
+    youtube: "#",
+  },
+
+  // Used for stats strip on the homepage
+  stats: [
+    { value: "12+", label: "Years in Ladakh" },
+    { value: "8,000+", label: "Happy Travellers" },
+    { value: "40+", label: "Curated Itineraries" },
+    { value: "4.9/5", label: "Average Rating" },
+  ],
+};
+
+export const navLinks = [
+  { href: "/", label: "Home" },
+  { href: "/tours", label: "Tours" },
+  { href: "/about", label: "About" },
+  { href: "/contact", label: "Contact" },
+];
