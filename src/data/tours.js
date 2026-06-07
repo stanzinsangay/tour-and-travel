@@ -108,7 +108,7 @@ export const tours = [
     bestSeason: "June – September",
     featured: true,
     image:
-      "https://images.unsplash.com/photo-1601758123927-196d5d8c0a5a?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1663407978077-ca116e36abf0?auto=format&fit=crop&w=1200&q=80",
     highlights: [
       "Ride 5 high-altitude passes including Tanglang La (17,480 ft)",
       "Royal Enfield Himalayan / Bullet 350",
@@ -157,7 +157,7 @@ export const tours = [
     bestSeason: "May – October",
     featured: false,
     image:
-      "https://images.unsplash.com/photo-1605640840605-14ac1855827b?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1685555845405-1503f76a5462?auto=format&fit=crop&w=1200&q=80",
     highlights: [
       "Tso Moriri — Ramsar-listed high-altitude lake",
       "Hanle Dark Sky Reserve & Indian Astronomical Observatory",
@@ -236,7 +236,7 @@ export const tours = [
     bestSeason: "June – September",
     featured: false,
     image:
-      "https://images.unsplash.com/photo-1486911278844-a81c5267e227?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1722313915784-b1feb972d353?auto=format&fit=crop&w=1200&q=80",
     highlights: [
       "Classic homestay trek through Markha Valley",
       "Cross Kongmaru La (17,060 ft)",
@@ -277,7 +277,7 @@ export const tours = [
     bestSeason: "May – September",
     featured: false,
     image:
-      "https://images.unsplash.com/photo-1488646953014-85cb44e25828?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1562479036-ca56a6f3e86a?auto=format&fit=crop&w=1200&q=80",
     highlights: [
       "Comfort-first pacing with extra rest",
       "Camel ride for kids at Hunder",

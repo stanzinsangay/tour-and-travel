@@ -54,7 +54,7 @@ export default function Home() {
       <section className="relative min-h-[88vh] flex items-end">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src="https://images.unsplash.com/photo-1610207294519-f98dba0c4d75?auto=format&fit=crop&w=2000&q=80"
+          src="https://images.unsplash.com/photo-1770917279526-48e205f8ec9a?auto=format&fit=crop&w=2000&q=80"
           alt="Pangong Lake, Ladakh"
           className="absolute inset-0 h-full w-full object-cover"
         />
