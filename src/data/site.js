@@ -9,9 +9,9 @@ export const site = {
     "OTSAL Tour & Travel is a Ladakh-based travel company crafting unforgettable journeys across Leh, Nubra, Pangong, Tso Moriri and the high Himalaya. Tailor-made tours, bike expeditions, treks and family holidays — run by locals who call these mountains home.",
 
   // --- Contact details (edit these to your real numbers) ---
-  phone: "+91 98765 43210",
+  phone: "+91 94192 12533",
   // WhatsApp number in international format, digits only (no +, spaces or dashes)
-  whatsapp: "919876543210",
+  whatsapp: "919419212533",
   email: "bookings@otsaltours.com",
   address: "Main Bazaar Road, Leh, Ladakh 194101, India",
 
