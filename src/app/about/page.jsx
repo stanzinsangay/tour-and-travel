@@ -39,7 +39,7 @@ export default function AboutPage() {
           <div className="overflow-hidden rounded-3xl">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src="https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?auto=format&fit=crop&w=1200&q=80"
+              src="https://i.pinimg.com/736x/3c/02/66/3c02661941fa0bd003989d7bf652a1f3.jpg"
               alt="Ladakh landscape"
               className="h-full w-full object-cover"
             />
