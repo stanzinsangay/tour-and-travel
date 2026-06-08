@@ -69,7 +69,7 @@ export const tours = [
     bestSeason: "May – September",
     featured: true,
     image:
-      "https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?auto=format&fit=crop&w=1200&q=80",
+      "https://i.pinimg.com/736x/39/31/f2/3931f2be8a79a86afe47018e7d57c55d.jpg",
     highlights: [
       "Double valley combo: Nubra + Pangong",
       "Diskit Monastery & giant Maitreya Buddha",
@@ -199,7 +199,7 @@ export const tours = [
     bestSeason: "April – October",
     featured: false,
     image:
-      "https://images.unsplash.com/photo-1571536802807-30451e3955d8?auto=format&fit=crop&w=1200&q=80",
+      "https://i.pinimg.com/1200x/21/20/13/212013bd84213650f53d323500361ee8.jpg",
     highlights: [
       "Thiksey, Hemis & Shey monasteries",
       "Magnetic Hill & Gurudwara Pathar Sahib",
@@ -236,7 +236,7 @@ export const tours = [
     bestSeason: "June – September",
     featured: false,
     image:
-      "https://images.unsplash.com/photo-1722313915784-b1feb972d353?auto=format&fit=crop&w=1200&q=80",
+      "https://i.pinimg.com/736x/c6/b3/34/c6b33416b08eeac4c0e6e6b9b7898a14.jpg",
     highlights: [
       "Classic homestay trek through Markha Valley",
       "Cross Kongmaru La (17,060 ft)",
