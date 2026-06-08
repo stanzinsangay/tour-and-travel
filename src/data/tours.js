@@ -21,7 +21,7 @@ export const tours = [
     bestSeason: "May – September",
     featured: true,
     image:
-      "https://images.unsplash.com/photo-1581791534721-e599df4417f7?auto=format&fit=crop&w=1200&q=80",
+      "https://i.pinimg.com/736x/b3/18/80/b318802d8b68969d37b9f44a9519b7ef.jpg",
     highlights: [
       "Khardung La — one of the world's highest motorable passes",
       "Camel safari on the dunes of Hunder, Nubra Valley",
