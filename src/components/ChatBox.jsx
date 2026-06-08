@@ -28,8 +28,25 @@ function botReply(key) {
   }
 }
 
+const KEYWORDS = [
+  { key: "tours", words: ["tour", "package", "trip", "itinerary", "trek", "bike", "offer"] },
+  { key: "price", words: ["price", "cost", "rate", "how much", "fee", "charge", "budget", "expensive"] },
+  { key: "season", words: ["season", "when", "time", "month", "weather", "best time", "visit"] },
+  { key: "booking", words: ["book", "reserve", "advance", "pay", "payment", "deposit", "confirm"] },
+  { key: "human", words: ["human", "agent", "call", "phone", "whatsapp", "email", "contact", "talk", "person"] },
+];
+
+function matchReply(text) {
+  const lower = text.toLowerCase();
+  for (const { key, words } of KEYWORDS) {
+    if (words.some((w) => lower.includes(w))) return botReply(key);
+  }
+  return botReply("default");
+}
+
 export default function ChatBox() {
   const [open, setOpen] = useState(false);
+  const [input, setInput] = useState("");
   const [messages, setMessages] = useState([
     {
       from: "bot",
@@ -50,6 +67,18 @@ export default function ChatBox() {
       { from: "user", text: q },
       { from: "bot", text: botReply(key) },
     ]);
+  }
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    const text = input.trim();
+    if (!text) return;
+    setMessages((prev) => [
+      ...prev,
+      { from: "user", text },
+      { from: "bot", text: matchReply(text) },
+    ]);
+    setInput("");
   }
 
   return (
@@ -99,7 +128,7 @@ export default function ChatBox() {
             ))}
           </div>
 
-          <div className="border-t border-stone-200 px-3 py-3 bg-white">
+          <div className="border-t border-stone-200 px-3 py-3 bg-white space-y-3">
             <div className="flex flex-wrap gap-2">
               {QUICK_REPLIES.map((r) => (
                 <button
@@ -112,6 +141,27 @@ export default function ChatBox() {
                 </button>
               ))}
             </div>
+
+            <form onSubmit={handleSubmit} className="flex items-center gap-2">
+              <input
+                type="text"
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                placeholder="Type your message…"
+                aria-label="Type your message"
+                className="flex-1 rounded-full border border-stone-300 px-4 py-2 text-sm text-stone-700 outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-100"
+              />
+              <button
+                type="submit"
+                aria-label="Send message"
+                disabled={!input.trim()}
+                className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-brand-600 text-white transition hover:bg-brand-700 disabled:opacity-40"
+              >
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <path d="M22 2 11 13M22 2l-7 20-4-9-9-4 20-7z" />
+                </svg>
+              </button>
+            </form>
           </div>
         </div>
       )}
