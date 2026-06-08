@@ -1,18 +1,28 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { site } from "@/data/site";
 import { formatINR } from "@/data/tours";
-import { buildWhatsAppLink } from "@/lib/booking";
+import { buildWhatsAppLink, buildUpiLink } from "@/lib/booking";
 
-// Shows direct UPI / bank-transfer payment details so a customer can pay the
-// advance themselves, then confirm by sending a screenshot on WhatsApp.
-// Pass `amount` (the full tour price) to display the exact advance figure, and
-// `enquiry` (the booking form data) so the WhatsApp message includes the
+// Shows direct UPI payment details so a customer can pay the advance, then
+// confirm by sending a screenshot on WhatsApp.
+// On a phone we show a "Pay now" button that opens the customer's UPI app
+// directly (via a upi://pay deep link) with the payee and amount prefilled.
+// On a desktop browser — where there's no UPI app to open — we fall back to
+// showing the QR code and UPI ID to scan / copy instead.
+// Pass `enquiry` (the booking form data) so the WhatsApp message includes the
 // customer's details along with the paid-advance note.
-export default function PaymentDetails({ amount, enquiry }) {
+export default function PaymentDetails({ enquiry }) {
   const p = site.payment;
   const [copied, setCopied] = useState("");
+  // Default to desktop (QR + UPI ID) so server and first client render match;
+  // we flip to the deep-link button after detecting a mobile device on mount.
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    setIsMobile(/Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent));
+  }, []);
 
   function copy(text, key) {
     if (!navigator.clipboard) return;
@@ -22,7 +32,16 @@ export default function PaymentDetails({ amount, enquiry }) {
     });
   }
 
-  const advance = amount ? Math.round((amount * p.advancePercent) / 100) : null;
+  const advance = p.advanceAmount;
+
+  const upiHref = buildUpiLink({
+    upiId: p.upiId,
+    name: p.upiName,
+    amount: advance,
+    note: enquiry?.tour
+      ? `${site.shortName} advance — ${enquiry.tour}`
+      : `${site.shortName} booking advance`,
+  });
 
   const waHref = enquiry
     ? buildWhatsAppLink(enquiry, { paid: true, advanceAmount: advance })
@@ -49,14 +68,8 @@ export default function PaymentDetails({ amount, enquiry }) {
         Pay your advance & confirm
       </h3>
       <p className="mt-1.5 text-sm text-stone-600">
-        Pay a {p.advancePercent}% advance
-        {advance ? (
-          <>
-            {" "}
-            (<strong className="text-stone-800">{formatINR(advance)}</strong>)
-          </>
-        ) : null}{" "}
-        to lock your dates. The balance is payable on arrival in Leh.
+        Pay a {formatINR(advance)} advance to lock your dates. The balance is
+        payable on arrival in Leh.
       </p>
 
       {/* UPI */}
@@ -64,31 +77,53 @@ export default function PaymentDetails({ amount, enquiry }) {
         <p className="text-xs font-semibold uppercase tracking-wide text-stone-500">
           Pay by UPI
         </p>
-        <div className="mt-2 flex items-center justify-between gap-3">
-          <span className="font-mono text-sm text-stone-800 break-all">
-            {p.upiId}
-          </span>
-          <button
-            type="button"
-            onClick={() => copy(p.upiId, "upi")}
-            className="shrink-0 rounded-lg bg-brand-700 px-3 py-1.5 text-xs font-semibold text-white hover:bg-brand-800 transition"
-          >
-            {copied === "upi" ? "Copied ✓" : "Copy"}
-          </button>
-        </div>
-        {p.qr ? (
-          <div className="mt-3">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={p.qr}
-              alt={`UPI QR code for ${p.upiName}`}
-              className="h-40 w-40 rounded-lg ring-1 ring-stone-200"
-            />
-            <p className="mt-1 text-xs text-stone-500">
-              Scan with any UPI app (GPay, PhonePe, Paytm…)
+
+        {isMobile ? (
+          // Phone: open the customer's payment app directly.
+          <>
+            <a
+              href={upiHref}
+              className="mt-2 block rounded-lg bg-brand-700 px-5 py-3 text-center text-sm font-semibold text-white shadow-md hover:bg-brand-800 transition"
+            >
+              Pay {formatINR(advance)} now
+            </a>
+            <p className="mt-2 text-center text-xs text-stone-500">
+              Opens your UPI app (GPay, PhonePe, Paytm…) with{" "}
+              <span className="font-mono text-stone-700">{p.upiId}</span> and the
+              amount already filled in.
             </p>
-          </div>
-        ) : null}
+          </>
+        ) : (
+          // Desktop: no UPI app to open — show the ID to copy and the QR to scan.
+          <>
+            <div className="mt-2 flex items-center justify-between gap-3">
+              <span className="font-mono text-sm text-stone-800 break-all">
+                {p.upiId}
+              </span>
+              <button
+                type="button"
+                onClick={() => copy(p.upiId, "upi")}
+                className="shrink-0 rounded-lg bg-brand-700 px-3 py-1.5 text-xs font-semibold text-white hover:bg-brand-800 transition"
+              >
+                {copied === "upi" ? "Copied ✓" : "Copy"}
+              </button>
+            </div>
+            {p.qr ? (
+              <div className="mt-3">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={p.qr}
+                  alt={`UPI QR code for ${p.upiName}`}
+                  className="h-40 w-40 rounded-lg ring-1 ring-stone-200"
+                />
+                <p className="mt-1 text-xs text-stone-500">
+                  Scan with any UPI app (GPay, PhonePe, Paytm…) and pay{" "}
+                  {formatINR(advance)}.
+                </p>
+              </div>
+            ) : null}
+          </>
+        )}
       </div>
 
       {/* Bank transfer — only shown once bank details are filled in */}

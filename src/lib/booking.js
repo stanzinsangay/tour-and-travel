@@ -27,6 +27,21 @@ export function buildWhatsAppLink(data, opts = {}) {
   return `https://wa.me/${site.whatsapp}?text=${text}`;
 }
 
+// Build a UPI deep link (upi://pay?…) that opens the customer's UPI app with
+// the payee, amount and note prefilled — so they can pay directly instead of
+// scanning a QR or copying the UPI ID. Works on phones with a UPI app
+// installed (GPay, PhonePe, Paytm…).
+export function buildUpiLink({ upiId, name, amount, note } = {}) {
+  const parts = [
+    `pa=${encodeURIComponent(upiId)}`,
+    name ? `pn=${encodeURIComponent(name)}` : null,
+    amount ? `am=${encodeURIComponent(amount)}` : null,
+    "cu=INR",
+    note ? `tn=${encodeURIComponent(note)}` : null,
+  ].filter(Boolean);
+  return `upi://pay?${parts.join("&")}`;
+}
+
 // Build a mailto: link as an email fallback.
 export function buildMailtoLink(data) {
   const subject = encodeURIComponent(

@@ -42,7 +42,6 @@ export default function BookingForm({
 
   // ---------- STEP 2: PAYMENT ----------
   if (step === "pay") {
-    const amount = priceByTitle[data.tour]; // undefined for custom / not-sure
     return (
       <div className="space-y-5">
         <div className="flex items-start justify-between gap-3">
@@ -67,7 +66,7 @@ export default function BookingForm({
           </button>
         </div>
 
-        <PaymentDetails amount={amount} enquiry={data} />
+        <PaymentDetails enquiry={data} />
       </div>
     );
   }
