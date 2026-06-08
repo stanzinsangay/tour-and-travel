@@ -98,7 +98,18 @@ export default function Footer() {
           <p>
             © {new Date().getFullYear()} {site.name}. All rights reserved.
           </p>
-          <p>Made with ssdesign 🏔️</p>
+          <p>
+            Made with{" "}
+            <a
+              href="https://www.instagram.com/ssdesign_zone?igsh=YWpxM2dpNmZqMGFy"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-white transition-colors"
+            >
+              ssdesign
+            </a>{" "}
+            🏔️
+          </p>
         </div>
       </div>
     </footer>
