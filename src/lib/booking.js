@@ -31,13 +31,29 @@ export function buildWhatsAppLink(data, opts = {}) {
 // the payee, amount and note prefilled — so they can pay directly instead of
 // scanning a QR or copying the UPI ID. Works on phones with a UPI app
 // installed (GPay, PhonePe, Paytm…).
+//
+// Two things UPI apps are strict about — get either wrong and the app rejects
+// the payment with a misleading error (e.g. "you have exceeded the limit"):
+//   • the note (tn) must be plain ASCII — non-ASCII characters like the em-dash
+//     "—" cause several apps (PhonePe/GPay) to refuse the intent;
+//   • the amount (am) must be a 2-decimal value, e.g. "1.00", not "1".
 export function buildUpiLink({ upiId, name, amount, note } = {}) {
+  // Plain-ASCII, length-capped note. Replace dashes with a hyphen, drop any
+  // remaining non-ASCII characters, and trim to a safe length.
+  const cleanNote =
+    note &&
+    note
+      .replace(/[—–]/g, "-")
+      .replace(/[^\x20-\x7E]/g, "")
+      .trim()
+      .slice(0, 50);
+
   const parts = [
     `pa=${encodeURIComponent(upiId)}`,
     name ? `pn=${encodeURIComponent(name)}` : null,
-    amount ? `am=${encodeURIComponent(amount)}` : null,
+    amount ? `am=${encodeURIComponent(Number(amount).toFixed(2))}` : null,
     "cu=INR",
-    note ? `tn=${encodeURIComponent(note)}` : null,
+    cleanNote ? `tn=${encodeURIComponent(cleanNote)}` : null,
   ].filter(Boolean);
   return `upi://pay?${parts.join("&")}`;
 }
