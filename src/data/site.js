@@ -22,7 +22,7 @@ export const site = {
   // Fill these with your REAL details. They show on the booking page so a
   // customer can pay the advance directly, then send a screenshot on WhatsApp.
   payment: {
-    advanceAmount: 7200, // flat advance (₹) needed to confirm a booking
+    advanceAmount: 5000, // flat advance (₹) needed to confirm a booking
     upiId: "7006120301@ybl", // PhonePe UPI ID
     upiName: "OTSAL Tour & Travel", // name shown to payer on UPI
     // Bank details — left blank for now, will be filled in later.
