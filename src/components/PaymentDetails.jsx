@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { site } from "@/data/site";
 import { formatINR } from "@/data/tours";
 import { buildWhatsAppLink, buildUpiLink } from "@/lib/booking";
@@ -18,10 +18,19 @@ export default function PaymentDetails({ enquiry, tour = null }) {
   const p = site.payment;
   const [copied, setCopied] = useState("");
   const [pdfBusy, setPdfBusy] = useState(false);
-  // The PDF summary unlocks only after the customer confirms payment — either
-  // with the on-page "I've paid" button (no app round-trip) or by sending the
-  // WhatsApp screenshot. Same gate on desktop and mobile.
+  // The booking PDF unlocks only once the customer has actually gone through
+  // the payment step — NOT on a plain "I've paid" claim (that let people grab
+  // the confirmation without paying). It unlocks when either:
+  //   • the customer taps "Pay now", is sent to their UPI app, and then RETURNS
+  //     to this page (detected via the Page Visibility API), or
+  //   • the customer sends the payment screenshot on WhatsApp (which the owner
+  //     verifies before the booking is treated as confirmed).
+  // NOTE: with manual UPI (no payment gateway) the page can't *prove* money
+  // arrived — true verification needs a gateway like Razorpay/PhonePe Business.
   const [paid, setPaid] = useState(false);
+  // Set when the customer leaves for their UPI app via the "Pay now" button, so
+  // we only unlock on the return trip that follows a real payment attempt.
+  const awaitingPayment = useRef(false);
   // Default to desktop (QR + UPI ID) so server and first client render match;
   // we flip to the deep-link button after detecting a mobile device on mount.
   const [isMobile, setIsMobile] = useState(false);
@@ -31,6 +40,20 @@ export default function PaymentDetails({ enquiry, tour = null }) {
 
   useEffect(() => {
     setIsMobile(/Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent));
+  }, []);
+
+  // Unlock the PDF when the customer comes back to this tab after being sent
+  // to their UPI app to pay. Only fires if they actually tapped "Pay now"
+  // (awaitingPayment), so simply revisiting the page doesn't unlock it.
+  useEffect(() => {
+    function onVisibility() {
+      if (document.visibilityState === "visible" && awaitingPayment.current) {
+        awaitingPayment.current = false;
+        setPaid(true);
+      }
+    }
+    document.addEventListener("visibilitychange", onVisibility);
+    return () => document.removeEventListener("visibilitychange", onVisibility);
   }, []);
 
   function copy(text, key) {
@@ -121,6 +144,9 @@ export default function PaymentDetails({ enquiry, tour = null }) {
           <>
             <a
               href={upiHref}
+              onClick={() => {
+                awaitingPayment.current = true;
+              }}
               className="mt-2 block rounded-lg bg-brand-700 px-5 py-3 text-center text-sm font-semibold text-white shadow-md hover:bg-brand-800 transition"
             >
               Pay {formatINR(advance)} now
@@ -193,9 +219,9 @@ export default function PaymentDetails({ enquiry, tour = null }) {
         {buttonLabel}
       </a>
 
-      {/* The PDF unlocks only once payment is confirmed. The customer confirms
-          right here on the page (no app round-trip needed) — or tapping the
-          WhatsApp button above also unlocks it. Same on desktop and phone. */}
+      {/* The PDF stays locked until the customer has actually paid:
+          - mobile: it unlocks automatically when they return from the UPI app;
+          - either device: sending the WhatsApp screenshot also unlocks it. */}
       {paid ? (
         <button
           type="button"
@@ -206,13 +232,11 @@ export default function PaymentDetails({ enquiry, tour = null }) {
           {pdfBusy ? "Preparing PDF…" : "⬇ Download payment & tour details (PDF)"}
         </button>
       ) : (
-        <button
-          type="button"
-          onClick={() => setPaid(true)}
-          className="mt-3 block w-full rounded-lg bg-brand-700 px-5 py-3 text-center text-sm font-semibold text-white shadow-md hover:bg-brand-800 transition"
-        >
-          I&apos;ve paid — unlock my booking PDF
-        </button>
+        <p className="mt-3 rounded-lg bg-stone-50 px-4 py-3 text-center text-xs text-stone-500 ring-1 ring-stone-200">
+          🔒 {isMobile
+            ? "Complete the payment above — when you come back to this page, your booking PDF will be ready to download here."
+            : "After paying, tap the WhatsApp button above to send your screenshot — your booking PDF will then be ready to download here."}
+        </p>
       )}
       <p className="mt-2 text-center text-xs text-stone-400">
         Opens WhatsApp with your details — just attach the screenshot and send.
