@@ -32,7 +32,8 @@ export default function BookingForm({
     e.preventDefault();
     setError("");
 
-    // Every field must be filled before we move to payment.
+    // Every field (except the optional message) must be filled before we
+    // move to payment.
     const required = [
       ["name", "full name"],
       ["phone", "phone / WhatsApp number"],
@@ -40,7 +41,6 @@ export default function BookingForm({
       ["tour", "tour"],
       ["travelDate", "travel date"],
       ["travellers", "number of travellers"],
-      ["message", "message"],
     ];
     const missing = required.filter(([k]) => !String(data[k] ?? "").trim());
     if (missing.length) {
@@ -167,14 +167,13 @@ export default function BookingForm({
         </Field>
       </div>
 
-      <Field label="Message *">
+      <Field label="Message (optional)">
         <textarea
           rows={4}
           className={inputClass}
           value={data.message}
           onChange={(e) => update("message", e.target.value)}
           placeholder="Tell us about your plans, group, budget or special requests…"
-          required
         />
       </Field>
 
