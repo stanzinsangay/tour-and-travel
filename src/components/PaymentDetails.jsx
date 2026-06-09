@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { site } from "@/data/site";
 import { formatINR } from "@/data/tours";
 import { buildWhatsAppLink, buildUpiLink } from "@/lib/booking";
+import { downloadBookingPdf } from "@/lib/pdf";
 
 // Shows direct UPI payment details so a customer can pay the advance, then
 // confirm by sending a screenshot on WhatsApp.
@@ -13,9 +14,10 @@ import { buildWhatsAppLink, buildUpiLink } from "@/lib/booking";
 // showing the QR code and UPI ID to scan / copy instead.
 // Pass `enquiry` (the booking form data) so the WhatsApp message includes the
 // customer's details along with the paid-advance note.
-export default function PaymentDetails({ enquiry }) {
+export default function PaymentDetails({ enquiry, tour = null }) {
   const p = site.payment;
   const [copied, setCopied] = useState("");
+  const [pdfBusy, setPdfBusy] = useState(false);
   // Default to desktop (QR + UPI ID) so server and first client render match;
   // we flip to the deep-link button after detecting a mobile device on mount.
   const [isMobile, setIsMobile] = useState(false);
@@ -33,6 +35,18 @@ export default function PaymentDetails({ enquiry }) {
       setCopied(key);
       setTimeout(() => setCopied(""), 1500);
     });
+  }
+
+  async function handleDownloadPdf() {
+    setPdfBusy(true);
+    try {
+      await downloadBookingPdf({ enquiry, tour });
+    } catch {
+      // Surface a minimal hint; PDF generation runs entirely client-side.
+      alert("Sorry, the PDF couldn't be generated. Please try again.");
+    } finally {
+      setPdfBusy(false);
+    }
   }
 
   const advance = p.advanceAmount;
@@ -173,6 +187,16 @@ export default function PaymentDetails({ enquiry }) {
       >
         {buttonLabel}
       </a>
+
+      {/* After paying, download a PDF with the payment & tour details to keep. */}
+      <button
+        type="button"
+        onClick={handleDownloadPdf}
+        disabled={pdfBusy}
+        className="mt-3 block w-full rounded-lg border border-stone-300 bg-white px-5 py-3 text-center text-sm font-semibold text-stone-800 shadow-sm hover:bg-stone-50 transition disabled:cursor-not-allowed disabled:opacity-60"
+      >
+        {pdfBusy ? "Preparing PDF…" : "⬇ Download payment & tour details (PDF)"}
+      </button>
       <p className="mt-2 text-center text-xs text-stone-400">
         Opens WhatsApp with your details — just attach the screenshot and send.
         Your booking is confirmed once we receive the advance.

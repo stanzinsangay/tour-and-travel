@@ -16,6 +16,7 @@ const empty = {
 
 export default function BookingForm({
   tourTitles = [],
+  tours = [],
   defaultTour = "",
   priceByTitle = {},
 }) {
@@ -42,6 +43,7 @@ export default function BookingForm({
 
   // ---------- STEP 2: PAYMENT ----------
   if (step === "pay") {
+    const selectedTour = tours.find((t) => t.title === data.tour) || null;
     return (
       <div className="space-y-5">
         <div className="flex items-start justify-between gap-3">
@@ -66,7 +68,7 @@ export default function BookingForm({
           </button>
         </div>
 
-        <PaymentDetails enquiry={data} />
+        <PaymentDetails enquiry={data} tour={selectedTour} />
       </div>
     );
   }

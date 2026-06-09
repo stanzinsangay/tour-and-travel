@@ -46,7 +46,7 @@ export default function BookingPage() {
               Fields marked * are required.
             </p>
             <div className="mt-6">
-              <BookingForm tourTitles={tourTitles} priceByTitle={priceByTitle} />
+              <BookingForm tourTitles={tourTitles} tours={tours} priceByTitle={priceByTitle} />
             </div>
           </div>
 
