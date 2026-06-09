@@ -55,4 +55,9 @@ export const gallery = [
     url: "https://www.youtube.com/watch?v=ZFLsBXFK3Pc",
     caption: "Sample: Ladakh travel film (replace with your own)",
   },
+   {
+    type: "youtube",
+    url: "https://www.youtube.com/watch?v=f4Kj5JVHFVw",
+    caption: "Sample: Ladakh travel film (replace with your own)",
+  },
 ];
