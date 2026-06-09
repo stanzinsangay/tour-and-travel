@@ -18,6 +18,10 @@ export default function PaymentDetails({ enquiry, tour = null }) {
   const p = site.payment;
   const [copied, setCopied] = useState("");
   const [pdfBusy, setPdfBusy] = useState(false);
+  // The PDF summary unlocks only after the customer confirms payment — either
+  // with the on-page "I've paid" button (no app round-trip) or by sending the
+  // WhatsApp screenshot. Same gate on desktop and mobile.
+  const [paid, setPaid] = useState(false);
   // Default to desktop (QR + UPI ID) so server and first client render match;
   // we flip to the deep-link button after detecting a mobile device on mount.
   const [isMobile, setIsMobile] = useState(false);
@@ -183,25 +187,37 @@ export default function PaymentDetails({ enquiry, tour = null }) {
         href={waHref}
         target="_blank"
         rel="noopener noreferrer"
+        onClick={() => setPaid(true)}
         className="mt-5 block rounded-lg bg-[#25D366] px-5 py-3 text-center text-sm font-semibold text-white shadow-md hover:brightness-95 transition"
       >
         {buttonLabel}
       </a>
 
-      {/* Download is available right here on the payment step — so after
-          paying (UPI/WhatsApp opens another app on a phone) the customer can
-          grab their booking PDF directly, without tapping "back" to return. */}
-      <button
-        type="button"
-        onClick={handleDownloadPdf}
-        disabled={pdfBusy}
-        className="mt-3 block w-full rounded-lg border border-stone-300 bg-white px-5 py-3 text-center text-sm font-semibold text-stone-800 shadow-sm hover:bg-stone-50 transition disabled:cursor-not-allowed disabled:opacity-60"
-      >
-        {pdfBusy ? "Preparing PDF…" : "⬇ Download payment & tour details (PDF)"}
-      </button>
+      {/* The PDF unlocks only once payment is confirmed. The customer confirms
+          right here on the page (no app round-trip needed) — or tapping the
+          WhatsApp button above also unlocks it. Same on desktop and phone. */}
+      {paid ? (
+        <button
+          type="button"
+          onClick={handleDownloadPdf}
+          disabled={pdfBusy}
+          className="mt-3 block w-full rounded-lg border border-stone-300 bg-white px-5 py-3 text-center text-sm font-semibold text-stone-800 shadow-sm hover:bg-stone-50 transition disabled:cursor-not-allowed disabled:opacity-60"
+        >
+          {pdfBusy ? "Preparing PDF…" : "⬇ Download payment & tour details (PDF)"}
+        </button>
+      ) : (
+        <button
+          type="button"
+          onClick={() => setPaid(true)}
+          className="mt-3 block w-full rounded-lg bg-brand-700 px-5 py-3 text-center text-sm font-semibold text-white shadow-md hover:bg-brand-800 transition"
+        >
+          I&apos;ve paid — unlock my booking PDF
+        </button>
+      )}
       <p className="mt-2 text-center text-xs text-stone-400">
         Opens WhatsApp with your details — just attach the screenshot and send.
         Your booking is confirmed once we receive the advance.
+        {paid ? " Your PDF is now ready to download above." : ""}
       </p>
     </div>
   );
