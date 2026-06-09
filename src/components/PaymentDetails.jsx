@@ -19,6 +19,9 @@ export default function PaymentDetails({ enquiry }) {
   // Default to desktop (QR + UPI ID) so server and first client render match;
   // we flip to the deep-link button after detecting a mobile device on mount.
   const [isMobile, setIsMobile] = useState(false);
+  // QR generated from the upi://pay link so it embeds the advance amount —
+  // scanning it prefills the amount in the payer's app (no typing).
+  const [qrDataUrl, setQrDataUrl] = useState("");
 
   useEffect(() => {
     setIsMobile(/Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent));
@@ -42,6 +45,23 @@ export default function PaymentDetails({ enquiry }) {
       ? `${site.shortName} advance — ${enquiry.tour}`
       : `${site.shortName} booking advance`,
   });
+
+  // Render the upi://pay link (amount included) to a QR data URL on the client.
+  // Falls back to the static p.qr image if generation fails.
+  useEffect(() => {
+    let cancelled = false;
+    import("qrcode")
+      .then(({ default: QRCode }) =>
+        QRCode.toDataURL(upiHref, { margin: 1, width: 320 })
+      )
+      .then((url) => {
+        if (!cancelled) setQrDataUrl(url);
+      })
+      .catch(() => {});
+    return () => {
+      cancelled = true;
+    };
+  }, [upiHref]);
 
   const waHref = enquiry
     ? buildWhatsAppLink(enquiry, { paid: true, advanceAmount: advance })
@@ -108,17 +128,17 @@ export default function PaymentDetails({ enquiry }) {
                 {copied === "upi" ? "Copied ✓" : "Copy"}
               </button>
             </div>
-            {p.qr ? (
+            {qrDataUrl || p.qr ? (
               <div className="mt-3">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
-                  src={p.qr}
+                  src={qrDataUrl || p.qr}
                   alt={`UPI QR code for ${p.upiName}`}
                   className="h-40 w-40 rounded-lg ring-1 ring-stone-200"
                 />
                 <p className="mt-1 text-xs text-stone-500">
-                  Scan with any UPI app (GPay, PhonePe, Paytm…) and pay{" "}
-                  {formatINR(advance)}.
+                  Scan with any UPI app (GPay, PhonePe, Paytm…) — the{" "}
+                  {formatINR(advance)} amount is already filled in.
                 </p>
               </div>
             ) : null}
