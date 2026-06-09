@@ -27,22 +27,22 @@ export const gallery = [
   // ── Photos ──────────────────────────────────────────────────────────────
   {
     type: "image",
-    src: "https://images.unsplash.com/photo-1606117331085-5760e3b58520?auto=format&fit=crop&w=1200&q=80",
+    src: "https://i.pinimg.com/736x/bf/5c/c9/bf5cc947c223d9b3746d964dc60d820f.jpg?auto=format&fit=crop&w=1200&q=80",
     caption: "Pangong Tso under a clear Ladakhi sky",
   },
   {
     type: "image",
-    src: "https://images.unsplash.com/photo-1581791534721-e599df4417f7?auto=format&fit=crop&w=1200&q=80",
+    src: "https://i.pinimg.com/736x/b5/60/ef/b560ef2b0c81b75a57d46929b2acf774.jpg?auto=format&fit=crop&w=1200&q=80",
     caption: "Prayer flags over the high passes",
   },
   {
     type: "image",
-    src: "https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?auto=format&fit=crop&w=1200&q=80",
+    src: "https://i.pinimg.com/736x/8c/9d/1a/8c9d1a4b4b4b4b4b4b4b4b4b4b4b4b4b.jpg?auto=format&fit=crop&w=1200&q=80",
     caption: "Monasteries above the Indus valley",
   },
   {
     type: "image",
-    src: "https://images.unsplash.com/photo-1597167333247-9cc4fa3f3b6a?auto=format&fit=crop&w=1200&q=80",
+    src: "https://i.pinimg.com/736x/d0/46/da/d046daf02e0f17df5f70e436b8b66dfe.jpg?auto=format&fit=crop&w=1200&q=80",
     caption: "Nubra's sand dunes & double-humped camels",
   },
 
