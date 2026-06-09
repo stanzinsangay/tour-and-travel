@@ -37,7 +37,7 @@ export const gallery = [
   },
   {
     type: "image",
-    src: "https://i.pinimg.com/736x/8c/9d/1a/8c9d1a4b4b4b4b4b4b4b4b4b4b4b4b4b.jpg?auto=format&fit=crop&w=1200&q=80",
+    src: "https://i.pinimg.com/1200x/35/89/86/3589865b1896bda8b10a1bfffb4b8c3e.jpg",
     caption: "Monasteries above the Indus valley",
   },
   {
