@@ -50,7 +50,7 @@ export const gallery = [
   // Replace this sample with your own clips (YouTube ID or an /public mp4).
   {
     type: "youtube",
-    id: "1La4QzGeaaQ",
+    id: "ZFLsBXFK3Pc",
     caption: "Sample: Ladakh travel film (replace with your own)",
   },
 ];
