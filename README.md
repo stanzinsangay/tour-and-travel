@@ -41,6 +41,7 @@ Everything you'll want to edit lives in **`src/data/`**:
 | --------------------- | ----------------------------------------------------------- |
 | `src/data/site.js`    | Business name, **phone, WhatsApp number, email, address**, social links, stats |
 | `src/data/tours.js`   | All tour packages — titles, prices, itineraries, images     |
+| `src/data/gallery.js` | **Gallery** photos & videos — add your own pics (image URL or `/public` file) and videos (YouTube ID or `/public` mp4) |
 
 > **Important:** open `src/data/site.js` and replace the placeholder
 > `phone`, `whatsapp` (digits only, e.g. `919876543210`), `email` and
