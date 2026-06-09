@@ -20,7 +20,7 @@ const poppins = Poppins({
 });
 
 export const metadata = {
-  metadataBase: new URL("https://otsaltours.com"),
+  metadataBase: new URL("https://stanzinsangay-tour-and-travel.vercel.app"),
   title: {
     default: `${site.name} — ${site.tagline}`,
     template: `%s | ${site.name}`,
