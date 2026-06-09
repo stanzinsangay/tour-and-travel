@@ -32,8 +32,23 @@ export default function BookingForm({
     e.preventDefault();
     setError("");
 
-    if (!data.name || !data.phone) {
-      setError("Please share at least your name and phone number.");
+    // Every field must be filled before we move to payment.
+    const required = [
+      ["name", "full name"],
+      ["phone", "phone / WhatsApp number"],
+      ["email", "email"],
+      ["tour", "tour"],
+      ["travelDate", "travel date"],
+      ["travellers", "number of travellers"],
+      ["message", "message"],
+    ];
+    const missing = required.filter(([k]) => !String(data[k] ?? "").trim());
+    if (missing.length) {
+      setError(
+        `Please fill in all details before continuing — missing: ${missing
+          .map(([, label]) => label)
+          .join(", ")}.`
+      );
       return;
     }
 
@@ -101,22 +116,26 @@ export default function BookingForm({
       </div>
 
       <div className="grid gap-4 sm:grid-cols-2">
-        <Field label="Email">
+        <Field label="Email *">
           <input
             type="email"
             className={inputClass}
             value={data.email}
             onChange={(e) => update("email", e.target.value)}
             placeholder="you@email.com"
+            required
           />
         </Field>
-        <Field label="Interested tour">
+        <Field label="Interested tour *">
           <select
             className={inputClass}
             value={data.tour}
             onChange={(e) => update("tour", e.target.value)}
+            required
           >
-            <option value="">Not sure yet / custom trip</option>
+            <option value="" disabled>
+              Select a tour
+            </option>
             {tourTitles.map((t) => (
               <option key={t} value={t}>
                 {t}
@@ -127,32 +146,35 @@ export default function BookingForm({
       </div>
 
       <div className="grid gap-4 sm:grid-cols-2">
-        <Field label="Preferred travel date">
+        <Field label="Preferred travel date *">
           <input
             type="date"
             className={inputClass}
             value={data.travelDate}
             onChange={(e) => update("travelDate", e.target.value)}
+            required
           />
         </Field>
-        <Field label="Travellers">
+        <Field label="Travellers *">
           <input
             type="number"
             min="1"
             className={inputClass}
             value={data.travellers}
             onChange={(e) => update("travellers", e.target.value)}
+            required
           />
         </Field>
       </div>
 
-      <Field label="Message">
+      <Field label="Message *">
         <textarea
           rows={4}
           className={inputClass}
           value={data.message}
           onChange={(e) => update("message", e.target.value)}
           placeholder="Tell us about your plans, group, budget or special requests…"
+          required
         />
       </Field>
 
