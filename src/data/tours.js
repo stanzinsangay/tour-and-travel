@@ -277,7 +277,7 @@ export const tours = [
     bestSeason: "May – September",
     featured: false,
     image:
-      "https://images.unsplash.com/photo-1562479036-ca56a6f3e86a?auto=format&fit=crop&w=1200&q=80",
+      "https://i.pinimg.com/1200x/16/fb/6a/16fb6ade3488a3bdfe0dd6776ee3947a.jpg",
     highlights: [
       "Comfort-first pacing with extra rest",
       "Camel ride for kids at Hunder",
