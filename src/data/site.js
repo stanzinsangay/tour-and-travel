@@ -12,7 +12,7 @@ export const site = {
   phone: "+91 94192 12533",
   // WhatsApp number in international format, digits only (no +, spaces or dashes)
   whatsapp: "919419212533",
-  email: "otsaltenzin@gmail.com",
+  email: "lodeosangpo@gmail.com",
   address: "Main Bazaar Road, Leh, Ladakh 194101, India",
 
   // Office hours
