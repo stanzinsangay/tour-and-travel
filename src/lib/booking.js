@@ -32,11 +32,19 @@ export function buildWhatsAppLink(data, opts = {}) {
 // scanning a QR or copying the UPI ID. Works on phones with a UPI app
 // installed (GPay, PhonePe, Paytm…).
 //
-// Two things UPI apps are strict about — get either wrong and the app rejects
-// the payment with a misleading error (e.g. "you have exceeded the limit"):
+// Things UPI apps are strict about — get any wrong and the app rejects the
+// payment with the SAME misleading error ("you've exceeded the limit set by
+// your bank — retry with a smaller amount"), which has nothing to do with
+// limits:
 //   • the note (tn) must be plain ASCII — non-ASCII characters like the em-dash
 //     "—" cause several apps (PhonePe/GPay) to refuse the intent;
-//   • the amount (am) must be a 2-decimal value, e.g. "1.00", not "1".
+//   • the amount (am) must be a 2-decimal value, e.g. "1.00", not "1";
+//   • a prefilled amount (am) to a PERSONAL VPA is blocked by NPCI's anti-fraud
+//     rules for person-to-person intents — only a verified MERCHANT VPA may
+//     prefill an amount. Our UPI ID (…@ybl) is a personal account, so we OMIT
+//     the amount: the app opens with the payee filled in and the customer types
+//     the amount (shown clearly in the UI). When a Razorpay/merchant VPA is
+//     onboarded, pass `amount` again to restore prefill. See [[otsal-payment-razorpay-planned]].
 export function buildUpiLink({ upiId, name, amount, note } = {}) {
   // Plain-ASCII, length-capped note. Replace dashes with a hyphen, drop any
   // remaining non-ASCII characters, and trim to a safe length.
@@ -51,7 +59,8 @@ export function buildUpiLink({ upiId, name, amount, note } = {}) {
   const parts = [
     `pa=${encodeURIComponent(upiId)}`,
     name ? `pn=${encodeURIComponent(name)}` : null,
-    amount ? `am=${encodeURIComponent(Number(amount).toFixed(2))}` : null,
+    // am intentionally omitted — see note above. Prefilling an amount to a
+    // personal VPA triggers the misleading "exceeded the limit" rejection.
     "cu=INR",
     cleanNote ? `tn=${encodeURIComponent(cleanNote)}` : null,
   ].filter(Boolean);

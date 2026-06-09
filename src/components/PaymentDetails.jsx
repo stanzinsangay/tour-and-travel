@@ -34,8 +34,9 @@ export default function PaymentDetails({ enquiry, tour = null }) {
   // Default to desktop (QR + UPI ID) so server and first client render match;
   // we flip to the deep-link button after detecting a mobile device on mount.
   const [isMobile, setIsMobile] = useState(false);
-  // QR generated from the upi://pay link so it embeds the advance amount —
-  // scanning it prefills the amount in the payer's app (no typing).
+  // QR generated from the upi://pay link. It embeds the payee (not the amount —
+  // see buildUpiLink: a prefilled amount to a personal VPA is rejected), so the
+  // payer scans it and types the advance shown in the UI.
   const [qrDataUrl, setQrDataUrl] = useState("");
 
   useEffect(() => {
@@ -87,8 +88,8 @@ export default function PaymentDetails({ enquiry, tour = null }) {
       : `${site.shortName} booking advance`,
   });
 
-  // Render the upi://pay link (amount included) to a QR data URL on the client.
-  // Falls back to the static p.qr image if generation fails.
+  // Render the upi://pay link (payee only, no amount) to a QR data URL on the
+  // client. Falls back to the static p.qr image if generation fails.
   useEffect(() => {
     let cancelled = false;
     import("qrcode")
@@ -153,8 +154,8 @@ export default function PaymentDetails({ enquiry, tour = null }) {
             </a>
             <p className="mt-2 text-center text-xs text-stone-500">
               Opens your UPI app (GPay, PhonePe, Paytm…) with{" "}
-              <span className="font-mono text-stone-700">{p.upiId}</span> and the
-              amount already filled in.
+              <span className="font-mono text-stone-700">{p.upiId}</span> filled
+              in. Enter <span className="font-semibold text-stone-700">{formatINR(advance)}</span> as the amount.
             </p>
           </>
         ) : (
@@ -181,8 +182,8 @@ export default function PaymentDetails({ enquiry, tour = null }) {
                   className="h-40 w-40 rounded-lg ring-1 ring-stone-200"
                 />
                 <p className="mt-1 text-xs text-stone-500">
-                  Scan with any UPI app (GPay, PhonePe, Paytm…) — the{" "}
-                  {formatINR(advance)} amount is already filled in.
+                  Scan with any UPI app (GPay, PhonePe, Paytm…), then enter{" "}
+                  {formatINR(advance)} as the amount.
                 </p>
               </div>
             ) : null}
