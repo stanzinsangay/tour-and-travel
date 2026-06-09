@@ -47,10 +47,12 @@ export const gallery = [
   },
 
   // ── Videos ──────────────────────────────────────────────────────────────
-  // Replace this sample with your own clips (YouTube ID or an /public mp4).
+  // Replace this sample with your own clips. For YouTube, paste the full video
+  // link (e.g. https://www.youtube.com/watch?v=…, https://youtu.be/…); for a
+  // hosted file use { type: "video", src: "/your-clip.mp4" }.
   {
     type: "youtube",
-    id: "ZFLsBXFK3Pc",
+    url: "https://www.youtube.com/watch?v=ZFLsBXFK3Pc",
     caption: "Sample: Ladakh travel film (replace with your own)",
   },
 ];

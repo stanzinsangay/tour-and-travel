@@ -15,6 +15,16 @@ const videos = gallery.filter(
   (item) => item.type === "youtube" || item.type === "video"
 );
 
+// Accept a full YouTube link in the data (watch?v=…, youtu.be/…, /embed/…) and
+// pull out the 11-char video ID for the embed URL. A bare ID is returned as-is,
+// so old entries keep working.
+function youtubeId(src = "") {
+  const m = String(src).match(
+    /(?:youtu\.be\/|watch\?v=|\/embed\/|\/shorts\/)([A-Za-z0-9_-]{11})/
+  );
+  return m ? m[1] : src;
+}
+
 export default function GalleryPage() {
   const isEmpty = photos.length === 0 && videos.length === 0;
 
@@ -95,13 +105,15 @@ export default function GalleryPage() {
                 <div className="mt-10 grid gap-6 sm:grid-cols-2">
                   {videos.map((item, i) => (
                     <figure
-                      key={`${item.id || item.src}-${i}`}
+                      key={`${item.url || item.id || item.src}-${i}`}
                       className="overflow-hidden rounded-2xl bg-black ring-1 ring-stone-200 shadow-sm"
                     >
                       <div className="aspect-video w-full">
                         {item.type === "youtube" ? (
                           <iframe
-                            src={`https://www.youtube-nocookie.com/embed/${item.id}`}
+                            src={`https://www.youtube-nocookie.com/embed/${youtubeId(
+                              item.url || item.id
+                            )}`}
                             title={item.caption || "OTSAL Ladakh tour video"}
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                             allowFullScreen
