@@ -53,19 +53,42 @@ files into the `public/` folder and reference them as `/my-photo.jpg`.
 
 ## 📩 Receiving bookings
 
-Out of the box, booking enquiries:
+Booking enquiries are:
 
-1. are **logged on the server** (visible in your terminal / hosting logs), and
-2. can be sent by the customer directly to your **WhatsApp** or **email** via
-   the buttons on the form.
+1. **logged on the server** (visible in your terminal / hosting logs),
+2. **emailed to you automatically** via SMTP (nodemailer — already installed
+   and active in `src/app/api/booking/route.js`), and
+3. can also be sent by the customer directly to your **WhatsApp** or **email**
+   via the buttons on the form.
 
-### Optional: get bookings by email automatically
+### Email setup (SMTP)
 
-1. `npm install nodemailer`
-2. Copy `.env.example` → `.env.local` and fill in your SMTP details
-3. Uncomment the nodemailer block in `src/app/api/booking/route.js`
+Email delivery is controlled by **environment variables**, not code. They must
+be set in **two places**: `.env.local` (for local `npm run dev`) **and** your
+host's dashboard (Vercel → Settings → Environment Variables) for the live site.
 
-(For Gmail, create an **App Password** and use it as `SMTP_PASS`.)
+| Variable    | Meaning                                              | Example                 |
+| ----------- | ---------------------------------------------------- | ----------------------- |
+| `SMTP_HOST` | Mail server                                          | `smtp.gmail.com`        |
+| `SMTP_PORT` | Port                                                 | `587`                   |
+| `SMTP_USER` | The Gmail account that **sends** the email           | `lodeosangpo@gmail.com` |
+| `SMTP_PASS` | Gmail **App Password** (NOT your normal password)    | 16-char app password    |
+| `BOOKING_TO`| The inbox where enquiries are **delivered**          | `lodeosangpo@gmail.com` |
+
+For Gmail: enable 2-Step Verification, then create an **App Password** at
+<https://myaccount.google.com/apppasswords> and use it as `SMTP_PASS`.
+
+> ⚠️ `.env.local` is git-ignored — secrets are never committed. After changing
+> env vars on Vercel you must **redeploy** for them to take effect.
+
+### Changing the booking email later
+
+- **Just receive bookings in a different inbox** → change **`BOOKING_TO`** only
+  (in `.env.local` *and* Vercel, then redeploy). No new password needed.
+- **Send from a different Gmail** → change `SMTP_USER` + generate a new
+  `SMTP_PASS` App Password (both places, then redeploy).
+- **Change the email shown on the website** → edit `email:` in
+  `src/data/site.js`, then commit + push (Vercel auto-redeploys).
 
 ## ☁️ Deploying (free options)
 
