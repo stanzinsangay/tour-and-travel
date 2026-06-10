@@ -2,11 +2,11 @@
 // Edit these once and they update across the whole website.
 
 export const site = {
-  name: "OTSAL Tour & Travel",
-  shortName: "OTSAL",
+  name: "OTHSAL Tour & Travel",
+  shortName: "OTHSAL",
   tagline: "Discover the Soul of Ladakh",
   description:
-    "OTSAL Tour & Travel is a Ladakh-based travel company crafting unforgettable journeys across Leh, Nubra, Pangong, Tso Moriri and the high Himalaya. Tailor-made tours, bike expeditions, treks and family holidays — run by locals who call these mountains home.",
+    "OTHSAL Tour & Travel is a Ladakh-based travel company crafting unforgettable journeys across Leh, Nubra, Pangong, Tso Moriri and the high Himalaya. Tailor-made tours, bike expeditions, treks and family holidays — run by locals who call these mountains home.",
 
   // --- Contact details (edit these to your real numbers) ---
   phone: "+91 94192 12533",
@@ -24,7 +24,7 @@ export const site = {
   payment: {
     advanceAmount: 1, // flat advance (₹) needed to confirm a booking
     upiId: "7006120301@ybl", // PhonePe UPI ID
-    upiName: "OTSAL Tour & Travel", // name shown to payer on UPI
+    upiName: "OTHSAL Tour & Travel", // name shown to payer on UPI
     // Bank details — left blank for now, will be filled in later.
     accountName: "",
     bankName: "",

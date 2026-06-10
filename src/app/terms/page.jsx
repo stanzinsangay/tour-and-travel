@@ -4,7 +4,7 @@ import PolicyPage, { PolicySection } from "@/components/PolicyPage";
 export const metadata = {
   title: "Terms & Conditions",
   description:
-    "Terms and conditions for booking tours with OTSAL Tour & Travel, Leh, Ladakh.",
+    "Terms and conditions for booking tours with OTHSAL Tour & Travel, Leh, Ladakh.",
 };
 
 export default function TermsPage() {
@@ -12,7 +12,7 @@ export default function TermsPage() {
     <PolicyPage
       eyebrow="Policies"
       title="Terms & Conditions"
-      intro="These terms govern your booking and travel with OTSAL Tour & Travel. By booking a tour with us you agree to the conditions below."
+      intro="These terms govern your booking and travel with OTHSAL Tour & Travel. By booking a tour with us you agree to the conditions below."
       updated="10 June 2026"
     >
       <PolicySection heading="1. Bookings & confirmation">
@@ -73,7 +73,7 @@ export default function TermsPage() {
 
       <PolicySection heading="6. Liability">
         <p>
-          OTSAL Tour & Travel acts in good faith to arrange safe, well-run trips.
+          OTHSAL Tour & Travel acts in good faith to arrange safe, well-run trips.
           We are not liable for loss, injury, delay or damage arising from events
           beyond our reasonable control, including force-majeure events, acts of
           government, illness, or your own actions. Travel in Ladakh is undertaken

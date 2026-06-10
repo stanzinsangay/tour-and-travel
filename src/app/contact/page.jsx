@@ -5,7 +5,7 @@ import { tours } from "@/data/tours";
 export const metadata = {
   title: "Contact Us",
   description:
-    "Get in touch with OTSAL Tour & Travel in Leh, Ladakh. Call, email or WhatsApp us — we reply fast.",
+    "Get in touch with OTHSAL Tour & Travel in Leh, Ladakh. Call, email or WhatsApp us — we reply fast.",
 };
 
 const tourTitles = tours.map((t) => t.title);
@@ -110,7 +110,7 @@ export default function ContactPage() {
 
             <div className="overflow-hidden rounded-2xl ring-1 ring-stone-200">
               <iframe
-                title="OTSAL office location — Leh, Ladakh"
+                title="OTHSAL office location — Leh, Ladakh"
                 src="https://www.google.com/maps?q=Leh,Ladakh&output=embed"
                 className="h-64 w-full border-0"
                 loading="lazy"

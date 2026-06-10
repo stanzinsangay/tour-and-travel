@@ -5,7 +5,7 @@ import SectionHeading from "@/components/SectionHeading";
 export const metadata = {
   title: "Gallery",
   description:
-    "Photos and videos from OTSAL Tour & Travel — real moments from our Ladakh tours across Leh, Nubra, Pangong and the high Himalaya.",
+    "Photos and videos from OTHSAL Tour & Travel — real moments from our Ladakh tours across Leh, Nubra, Pangong and the high Himalaya.",
 };
 
 // Split the owner's gallery items into photos and videos so we can show each
@@ -40,7 +40,7 @@ export default function GalleryPage() {
             Moments from the mountains
           </h1>
           <p className="mt-4 max-w-2xl text-stone-300">
-            A glimpse of real journeys with OTSAL — the landscapes, the people
+            A glimpse of real journeys with OTHSAL — the landscapes, the people
             and the memories we make across Ladakh.
           </p>
         </div>
@@ -81,7 +81,7 @@ export default function GalleryPage() {
                       {/* eslint-disable-next-line @next/next/no-img-element */}
                       <img
                         src={item.src}
-                        alt={item.caption || "OTSAL Ladakh tour photo"}
+                        alt={item.caption || "OTHSAL Ladakh tour photo"}
                         loading="lazy"
                         className="aspect-[4/3] w-full object-cover transition duration-500 group-hover:scale-105"
                       />
@@ -114,7 +114,7 @@ export default function GalleryPage() {
                             src={`https://www.youtube-nocookie.com/embed/${youtubeId(
                               item.url || item.id
                             )}`}
-                            title={item.caption || "OTSAL Ladakh tour video"}
+                            title={item.caption || "OTHSAL Ladakh tour video"}
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                             allowFullScreen
                             loading="lazy"

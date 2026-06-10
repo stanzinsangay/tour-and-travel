@@ -5,7 +5,7 @@ import SectionHeading from "@/components/SectionHeading";
 export const metadata = {
   title: "About Us",
   description:
-    "OTSAL Tour & Travel is a locally-owned Ladakh travel company based in Leh, crafting safe, authentic and tailor-made Himalayan journeys since 2013.",
+    "OTHSAL Tour & Travel is a locally-owned Ladakh travel company based in Leh, crafting safe, authentic and tailor-made Himalayan journeys since 2013.",
 };
 
 const values = [
@@ -23,7 +23,7 @@ export default function AboutPage() {
             About
           </p>
           <h1 className="mt-2 font-display text-4xl md:text-5xl font-extrabold">
-            We are OTSAL — your local Ladakh experts
+            We are OTHSAL — your local Ladakh experts
           </h1>
           <p className="mt-4 max-w-2xl text-stone-300">
             Born in Leh, raised among these mountains. Since 2013 we've guided
@@ -48,7 +48,7 @@ export default function AboutPage() {
             <SectionHeading eyebrow="Our story" title="From a small Leh office to Ladakh's trusted name" />
             <div className="mt-5 space-y-4 text-stone-600 leading-relaxed">
               <p>
-                OTSAL Tour & Travel began with a single jeep and a simple belief:
+                OTHSAL Tour & Travel began with a single jeep and a simple belief:
                 that the best way to experience Ladakh is with someone who truly
                 belongs here. What started as guiding friends-of-friends grew,
                 trip by trip, into one of Leh's most loved travel companies.
@@ -60,7 +60,7 @@ export default function AboutPage() {
                 honesty and warmth at the core.
               </p>
               <p>
-                We're not a faceless online aggregator. When you book with OTSAL,
+                We're not a faceless online aggregator. When you book with OTHSAL,
                 you're talking to people who live in Leh, who'll meet you at the
                 airport, and who'll be a phone call away the entire trip.
               </p>

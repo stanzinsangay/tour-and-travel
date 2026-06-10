@@ -33,7 +33,7 @@ export const metadata = {
     "Nubra valley",
     "Ladakh bike trip",
     "Ladakh travel agency",
-    "OTSAL Tour and Travel",
+    "OTHSAL Tour and Travel",
   ],
   openGraph: {
     title: `${site.name} — ${site.tagline}`,

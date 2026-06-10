@@ -6,7 +6,7 @@ import TourBookingForm from "@/components/TourBookingForm";
 export const metadata = {
   title: "Book Your Ladakh Tour",
   description:
-    "Book and confirm your Ladakh trip with OTSAL Tour & Travel. Pay a small advance to lock your dates — balance payable on arrival.",
+    "Book and confirm your Ladakh trip with OTHSAL Tour & Travel. Pay a small advance to lock your dates — balance payable on arrival.",
 };
 
 const tourTitles = tours.map((t) => t.title);

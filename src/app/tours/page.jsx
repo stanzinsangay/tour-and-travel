@@ -4,7 +4,7 @@ import ToursExplorer from "@/components/ToursExplorer";
 export const metadata = {
   title: "Ladakh Tour Packages",
   description:
-    "Browse OTSAL's Ladakh tour packages — sightseeing circuits, bike expeditions, treks, family holidays and offbeat Changthang journeys. All fully customisable.",
+    "Browse OTHSAL's Ladakh tour packages — sightseeing circuits, bike expeditions, treks, family holidays and offbeat Changthang journeys. All fully customisable.",
 };
 
 export default function ToursPage() {

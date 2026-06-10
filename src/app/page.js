@@ -33,7 +33,7 @@ const testimonials = [
   {
     name: "Aarav & Meera",
     place: "Mumbai",
-    text: "Pangong at sunrise with OTSAL was the highlight of our year. Everything just worked — pickups, permits, the camps. Felt looked-after the whole way.",
+    text: "Pangong at sunrise with OTHSAL was the highlight of our year. Everything just worked — pickups, permits, the camps. Felt looked-after the whole way.",
   },
   {
     name: "Sophie L.",
@@ -70,7 +70,7 @@ export default function Home() {
             </h1>
             <p className="mt-5 max-w-xl text-lg text-stone-100/90">
               From the turquoise of Pangong to the dunes of Nubra and the high
-              passes in between — let OTSAL craft your perfect Himalayan journey.
+              passes in between — let OTHSAL craft your perfect Himalayan journey.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <Link
@@ -134,7 +134,7 @@ export default function Home() {
         <div className="container-x">
           <SectionHeading
             center
-            eyebrow="Why OTSAL"
+            eyebrow="Why OTHSAL"
             title="Ladakh, done right"
             subtitle="Twelve years on these roads. Here's what travelling with a true local outfit gets you."
           />

@@ -183,11 +183,11 @@ export async function downloadBookingPdf({ enquiry = {}, tour = null } = {}) {
     .trim()
     .replace(/\s+/g, "-")
     .replace(/[^a-zA-Z0-9_-]/g, "");
-  doc.save(`OTSAL-${safeName || "booking"}-${ref}.pdf`);
+  doc.save(`OTHSAL-${safeName || "booking"}-${ref}.pdf`);
   return ref;
 }
 
-// e.g. OTSAL-250609-4821
+// e.g. OTHSAL-250609-4821
 function makeBookingRef() {
   const d = new Date();
   const ymd =
@@ -195,7 +195,7 @@ function makeBookingRef() {
     String(d.getMonth() + 1).padStart(2, "0") +
     String(d.getDate()).padStart(2, "0");
   const rand = String(Math.floor(1000 + Math.random() * 9000));
-  return `OTSAL-${ymd}-${rand}`;
+  return `OTHSAL-${ymd}-${rand}`;
 }
 
 function fmt(n) {

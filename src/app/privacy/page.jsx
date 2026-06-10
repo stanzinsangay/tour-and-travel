@@ -4,7 +4,7 @@ import PolicyPage, { PolicySection } from "@/components/PolicyPage";
 export const metadata = {
   title: "Privacy Policy",
   description:
-    "How OTSAL Tour & Travel collects, uses and protects your personal information.",
+    "How OTHSAL Tour & Travel collects, uses and protects your personal information.",
 };
 
 export default function PrivacyPage() {

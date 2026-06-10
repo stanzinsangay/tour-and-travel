@@ -51,7 +51,7 @@ export async function POST(request) {
       });
 
       await transporter.sendMail({
-        from: `"OTSAL Website" <${process.env.SMTP_USER}>`,
+        from: `"OTHSAL Website" <${process.env.SMTP_USER}>`,
         to: process.env.BOOKING_TO || process.env.SMTP_USER,
         replyTo: data.email || undefined,
         subject: `New booking enquiry — ${data.tour || "Custom trip"}`,

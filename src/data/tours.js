@@ -1,6 +1,6 @@
 // Ladakh tour packages.
 // These are realistic sample packages — edit prices, itineraries and
-// images to match what OTSAL Tour & Travel actually offers.
+// images to match what OTHSAL Tour & Travel actually offers.
 //
 // Images use Unsplash (free to use). Swap the URLs for your own photos.
 

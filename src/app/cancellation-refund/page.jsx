@@ -4,7 +4,7 @@ import PolicyPage, { PolicySection } from "@/components/PolicyPage";
 export const metadata = {
   title: "Cancellation & Refund Policy",
   description:
-    "Cancellation and refund terms for OTSAL Tour & Travel bookings. The booking advance is non-refundable; please read before you confirm a tour.",
+    "Cancellation and refund terms for OTHSAL Tour & Travel bookings. The booking advance is non-refundable; please read before you confirm a tour.",
 };
 
 export default function CancellationRefundPage() {
