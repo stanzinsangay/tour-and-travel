@@ -1,11 +1,12 @@
+import Link from "next/link";
 import { tours } from "@/data/tours";
 import { site } from "@/data/site";
-import BookingForm from "@/components/BookingForm";
+import TourBookingForm from "@/components/TourBookingForm";
 
 export const metadata = {
   title: "Book Your Ladakh Tour",
   description:
-    "Book or enquire about your Ladakh trip with OTSAL Tour & Travel. Get a tailor-made itinerary and quote within 24 hours.",
+    "Book and confirm your Ladakh trip with OTSAL Tour & Travel. Pay a small advance to lock your dates — balance payable on arrival.",
 };
 
 const tourTitles = tours.map((t) => t.title);
@@ -26,11 +27,15 @@ export default function BookingPage() {
             Booking
           </p>
           <h1 className="mt-2 font-display text-4xl md:text-5xl font-extrabold">
-            Plan your Ladakh trip
+            Confirm your Ladakh trip
           </h1>
           <p className="mt-4 max-w-2xl text-stone-300">
-            No payment needed to enquire. Share a few details and our local team
-            will craft a tailor-made itinerary just for you.
+            Fill in your details and pay a small advance to lock your dates — the
+            balance is payable on arrival in Leh. Just have a question?{" "}
+            <Link href="/contact" className="font-semibold text-saffron-400 underline">
+              Send a free WhatsApp enquiry
+            </Link>{" "}
+            instead.
           </p>
         </div>
       </section>
@@ -40,13 +45,13 @@ export default function BookingPage() {
           {/* Form */}
           <div className="lg:col-span-2 rounded-2xl bg-white p-6 md:p-8 ring-1 ring-stone-200 shadow-sm">
             <h2 className="font-display text-2xl font-bold text-stone-900">
-              Booking enquiry form
+              Tour booking form
             </h2>
             <p className="mt-1 text-sm text-stone-500">
               Fields marked * are required.
             </p>
             <div className="mt-6">
-              <BookingForm tourTitles={tourTitles} tours={tours} priceByTitle={priceByTitle} />
+              <TourBookingForm tourTitles={tourTitles} tours={tours} priceByTitle={priceByTitle} />
             </div>
           </div>
 

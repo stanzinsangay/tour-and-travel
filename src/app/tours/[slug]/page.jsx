@@ -2,7 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { tours, getTour, formatINR } from "@/data/tours";
 import { site } from "@/data/site";
-import BookingForm from "@/components/BookingForm";
+import TourBookingForm from "@/components/TourBookingForm";
 
 // Pre-render a static page for every tour at build time.
 export function generateStaticParams() {
@@ -229,12 +229,17 @@ export default async function TourDetail({ params }) {
             Book the {tour.title}
           </h2>
           <p className="mt-2 text-center text-stone-600">
-            Fill in the form and our team will confirm availability and a quote
-            within 24 hours.
+            Fill in your details and pay a small advance to lock your dates — the
+            balance is payable on arrival. Just have a question?{" "}
+            <a href={whatsappHref} target="_blank" rel="noopener noreferrer" className="font-semibold text-brand-700 underline">
+              Enquire on WhatsApp
+            </a>{" "}
+            instead.
           </p>
           <div className="mt-8 rounded-2xl bg-white p-6 md:p-8 ring-1 ring-stone-200 shadow-sm">
-            <BookingForm
+            <TourBookingForm
               tourTitles={tourTitles}
+              tours={tours}
               defaultTour={tour.title}
               priceByTitle={priceByTitle}
             />
