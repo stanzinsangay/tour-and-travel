@@ -5,9 +5,9 @@ import { tours } from "@/data/tours";
 export default function Footer() {
   return (
     <footer className="bg-brand-950 text-stone-300">
-      <div className="container-x py-14 grid gap-10 md:grid-cols-2 lg:grid-cols-4">
+      <div className="container-x py-14 grid gap-10 md:grid-cols-2 lg:grid-cols-5">
         {/* Brand */}
-        <div>
+        <div className="lg:col-span-2">
           <div className="flex items-center gap-2.5 mb-4">
             <span className="grid place-items-center h-10 w-10 rounded-xl bg-brand-600 text-white font-display font-extrabold text-lg">
               O
@@ -89,6 +89,25 @@ export default function Footer() {
               </a>
             </li>
             <li className="text-stone-500">{site.hours}</li>
+          </ul>
+
+          <h4 className="text-white font-semibold mt-7 mb-4">Policies</h4>
+          <ul className="space-y-2.5 text-sm">
+            <li>
+              <Link href="/cancellation-refund" className="hover:text-white transition">
+                Cancellation & Refund
+              </Link>
+            </li>
+            <li>
+              <Link href="/terms" className="hover:text-white transition">
+                Terms & Conditions
+              </Link>
+            </li>
+            <li>
+              <Link href="/privacy" className="hover:text-white transition">
+                Privacy Policy
+              </Link>
+            </li>
           </ul>
         </div>
       </div>

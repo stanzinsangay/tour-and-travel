@@ -244,6 +244,13 @@ export default function PaymentDetails({ enquiry, tour = null }) {
         Your booking is confirmed once we receive the advance.
         {paid ? " Your PDF is now ready to download above." : ""}
       </p>
+      <p className="mt-2 text-center text-xs text-stone-400">
+        The advance is non-refundable if you cancel. See our{" "}
+        <a href="/cancellation-refund" className="underline hover:text-brand-700">
+          Cancellation & Refund Policy
+        </a>
+        .
+      </p>
     </div>
   );
 }
