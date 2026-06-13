@@ -22,6 +22,23 @@ const WhatsAppIcon = (
   </svg>
 );
 
+const EmailIcon = (
+  <svg
+    width="32"
+    height="32"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="#0e7490"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    aria-hidden="true"
+  >
+    <rect x="2" y="4" width="20" height="16" rx="2" />
+    <path d="m2 7 10 6 10-6" />
+  </svg>
+);
+
 const cards = [
   {
     icon: "📞",
@@ -38,7 +55,7 @@ const cards = [
     cta: "Open chat",
   },
   {
-    icon: "✉️",
+    icon: EmailIcon,
     title: "Email",
     lines: [site.email],
     href: `mailto:${site.email}`,
